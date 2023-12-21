@@ -1,29 +1,9 @@
 {% extends "layout.html" %}
 {% block body %}
-
-        <!-- Page Header-->
-        <header class="masthead">
-            <div class="container position-relative px-4 px-lg-5">
-                <div class="row gx-4 gx-lg-5 justify-content-center">
-                    <div class="col-md-10 col-lg-8 col-xl-7">
-                        <div class="site-heading">
-                            <h1>Clean Blog</h1>
-                            <span class="subheading">A Blog Theme by Start Bootstrap</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </header>
-        <!-- Main Content-->
-        <div class="container px-4 px-lg-5">
-            <div class="row gx-4 gx-lg-5 justify-content-center">
-                <div class="col-md-10 col-lg-8 col-xl-7">
-                    <!-- Divider-->
-                    <hr class="my-4" />
-                    <!-- Pager-->
-                    <div class="d-flex justify-content-end mb-4"><a class="btn btn-primary text-uppercase" href="#!">Older Posts →</a></div>
-                </div>
-            </div>
-        </div>
-
+    <script src="static/js/homepage.js"></script>
+    <div class="content">
+        <button class="float-end" id="myBtn" onclick="videoPlayPause()">Pause</button>
+        <h1>Welcome!</h1>
+        <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Possimus rerum repellat dolore cumque cupiditate recusandae aspernatur asperiores nemo voluptatem quibusdam, deleniti ipsum in nobis atque itaque cum quo! Praesentium, dolor!</p>
+    </div>
 {% endblock body %}
