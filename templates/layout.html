@@ -18,34 +18,34 @@
         </video>
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
             <div class="container-fluid">
-            <a class="navbar-brand image-container" href="index.html"><img src="static/src/logo.png" alt="logo"></a>
+            <a class="navbar-brand image-container" href="/"><img src="static/src/logo.png" alt="logo"></a>
                 <div class="navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav">
                     <li class="nav-item">
-                        <a class="nav-link active" href="index.html">Home</a>
+                        <a class="nav-link active" href="/">Home</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="courts.html">Courts</a>
+                        <a class="nav-link" href="courts">Courts</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="contact.html">Contact</a>
+                        <a class="nav-link" href="contact">Contact</a>
                     </li>
                     </ul>
                     <div class="ms-auto">
-                        <ul class="navbar-nav"></ul>
-                        {% if session["user_id"] %}
-                            <li class="nav-item">
-                                <a class="nav-link" href="logout.html">Logout</a>
-                            </li>                        
-                        {% else %}
-                            <li class="nav-item">
-                                <a class="nav-link" href="login.html">Login</a>
-                            </li>
-                        {% endif %}
+                    <ul class="navbar-nav">    
+                    {% if session["user_id"] %}                      
                         <li class="nav-item">
-                            <a class="nav-link" href="register.html">Register</a>
-                        </li>
-                        </ul>
+                            <a class="nav-link" href="login">Login</a>
+                        </li>                          
+                    {% else %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="login">Login</a>
+                        </li>                       
+                    {% endif %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="register">Register</a>
+                    </li> 
+                    </ul>
                     </div>
                 </div>
             </div>

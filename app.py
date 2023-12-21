@@ -16,6 +16,54 @@ Session(app)
 # Configure CS50 Library to use SQLite database
 db = SQL("sqlite:///book.db")
 
+@app.after_request
+def after_request(response):
+    """Ensure responses aren't cached"""
+    response.headers["Cache-Control"] = "no-cache, no-store, must-revalidate"
+    response.headers["Expires"] = 0
+    response.headers["Pragma"] = "no-cache"
+    return response
+
 @app.route("/")
 def index():
     return render_template("index.html")
+
+
+@app.route("/login", methods=["GET", "POST"])
+def login():
+    return render_template("login.html")
+
+@app.route("/register", methods=["GET", "POST"])
+def register():
+    """Register user"""
+
+    # User reached route via POST (as by submitting a form via POST)
+    if request.method == "POST":
+        username = request.form.get("username")
+        password = request.form.get("password")
+        confirmation = request.form.get("confirmation")
+        if username == "":
+            return apology("invalid username")
+        if (
+            password == ""
+            or confirmation == ""
+            or password != confirmation
+            or len(password) < 1
+        ):
+            return apology("ivalid password")
+        duplicate = db.execute(
+            "SELECT username FROM users WHERE username = ?", username
+        )
+        if not duplicate:
+            hash = generate_password_hash(password, method="pbkdf2", salt_length=16)
+            db.execute(
+                "INSERT INTO users (username, hash) VALUES(?, ?)",
+                escape(username),
+                hash,
+            )
+            return redirect("/")
+        return apology("duplicate username", 400)
+
+    # User reached route via GET (as by clicking a link or via redirect)
+    else:
+        return render_template("register.html")

@@ -1,0 +1,15 @@
+body {
+    margin: 0;
+    font-family: Arial;
+    font-size: 17px;
+}
+
+.textColor{
+    color: white;
+}
+.login-container {
+    opacity: 70%;
+}
+.login-container:hover {
+    opacity: 100%;
+}
