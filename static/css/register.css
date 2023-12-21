@@ -1,0 +1,15 @@
+body {
+    margin: 0;
+    font-family: Arial;
+    font-size: 17px;
+}
+
+.textColor{
+    color: white;
+}
+.register-container {
+    opacity: 70%;
+}
+.register-container:hover {
+    opacity: 100%;
+}
