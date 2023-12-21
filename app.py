@@ -16,6 +16,26 @@ Session(app)
 # Configure CS50 Library to use SQLite database
 db = SQL("sqlite:///book.db")
 
+def escape(s):
+    """
+    Escape special characters.
+
+    https://github.com/jacebrowning/memegen#special-characters
+    """
+    for old, new in [
+        ("-", "--"),
+        (" ", "-"),
+        ("_", "__"),
+        ("?", "~q"),
+        ("%", "~p"),
+        ("#", "~h"),
+        ("/", "~s"),
+        ('"', "''"),
+    ]:
+        s = s.replace(old, new)
+    return s
+
+
 @app.after_request
 def after_request(response):
     """Ensure responses aren't cached"""
@@ -41,16 +61,7 @@ def register():
     if request.method == "POST":
         username = request.form.get("username")
         password = request.form.get("password")
-        confirmation = request.form.get("confirmation")
-        if username == "":
-            return apology("invalid username")
-        if (
-            password == ""
-            or confirmation == ""
-            or password != confirmation
-            or len(password) < 1
-        ):
-            return apology("ivalid password")
+        print("checking db")
         duplicate = db.execute(
             "SELECT username FROM users WHERE username = ?", username
         )
@@ -61,8 +72,9 @@ def register():
                 escape(username),
                 hash,
             )
+            print("registed")
             return redirect("/")
-        return apology("duplicate username", 400)
+        #TODO : ELSE ALERT!! 
 
     # User reached route via GET (as by clicking a link or via redirect)
     else:
