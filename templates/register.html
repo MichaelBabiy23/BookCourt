@@ -5,19 +5,23 @@
 <div class="container mt-5">
     <div class="row justify-content-center">
         <div class="col-md-3">
-            <form class="p-4 shadow rounded bg-dark textColor register-container">
+            <form class="p-4 shadow rounded bg-dark textColor register-container" action="/register" method="post">
                 <h2 class="text-center mb-4">Sign up</h2>
                 <div class="mb-3">
                     <label for="username" class="form-label">Username</label>
-                    <input type="text" class="form-control" id="username" placeholder="Enter your username">
+                    <input type="text" class="form-control" id="username" placeholder="Enter your username" name="username">
                 </div>
                 <div class="mb-3">
                     <label for="email" class="form-label">Email</label>
-                    <input type="email" class="form-control" id="email" placeholder="Enter your email">
+                    <input type="email" class="form-control" id="email" placeholder="Enter your email" name="mail">
+                </div>
+                <div class="mb-3">
+                    <label for="phone" class="form-label">Phone</label>
+                    <input type="tel" class="form-control" id="phone" placeholder="Enter your phone" name="phone" pattern="[0]{1}[5]{1}[0-9]{8}">
                 </div>
                 <div class="mb-3">
                     <label for="password" class="form-label">Password</label>
-                    <input type="password" class="form-control" id="password" placeholder="Enter your password">
+                    <input type="password" class="form-control" id="password" placeholder="Enter your password" name="password">
                 </div>
                 <div class="mb-3">
                     <label for="password" class="form-label">Repeat your password</label>

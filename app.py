@@ -46,36 +46,66 @@ def after_request(response):
 
 @app.route("/")
 def index():
+    if session.get('logged_in'):
+        username = db.execute("SELECT username FROM users WHERE id = ?", session["user_id"])[0]["username"]                
+        return render_template("index.html", username=username)
     return render_template("index.html")
 
 
 @app.route("/login", methods=["GET", "POST"])
 def login():
-    return render_template("login.html")
+    """login user"""
+    session.clear()
+    if request.method == "POST":
+        username = request.form.get("username")
+        rows = db.execute(
+            "SELECT * FROM users WHERE username = ?", username
+        )
+        if len(rows) != 1 or not check_password_hash(
+            rows[0]["hash"], request.form.get("password")
+        ):
+            return render_template("login.html")
+        session["user_id"] = rows[0]["id"]
+        session["logged_in"] = True
+        return redirect("/")
+    else:
+        return render_template("login.html")
+
+
+@app.route("/logout")
+def logout():
+    """Log user out"""
+    session.clear()
+    return redirect("/")
+
 
 @app.route("/register", methods=["GET", "POST"])
 def register():
     """Register user"""
-
-    # User reached route via POST (as by submitting a form via POST)
     if request.method == "POST":
-        username = request.form.get("username")
-        password = request.form.get("password")
-        print("checking db")
+        info = {
+            'username' : request.form.get("username"),
+            'password' : request.form.get("password"),
+            'email' : request.form.get("mail"),
+            'phone' : request.form.get("phone")
+        }
         duplicate = db.execute(
-            "SELECT username FROM users WHERE username = ?", username
+            "SELECT username, email, phone FROM users WHERE username = ? or email = ? or phone = ? ", 
+            info["username"],
+            info["email"],
+            info["phone"]
         )
         if not duplicate:
-            hash = generate_password_hash(password, method="pbkdf2", salt_length=16)
+            hash = generate_password_hash(info["password"], method="pbkdf2", salt_length=16)
             db.execute(
-                "INSERT INTO users (username, hash) VALUES(?, ?)",
-                escape(username),
+                "INSERT INTO users (username, hash, email, phone) VALUES(?, ?, ?, ?)",
+                escape(info["username"]),
                 hash,
+                escape(info["email"]),
+                info["phone"]
             )
-            print("registed")
-            return redirect("/")
+            return redirect("/login")
         #TODO : ELSE ALERT!! 
-
-    # User reached route via GET (as by clicking a link or via redirect)
     else:
         return render_template("register.html")
+    
