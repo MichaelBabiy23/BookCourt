@@ -49,3 +49,8 @@ body {
 .image-container img {
     height:100%;
 }
+
+.userName{
+    color: #ddd;
+    margin-right: 30px;
+}
