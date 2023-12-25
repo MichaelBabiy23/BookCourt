@@ -112,5 +112,5 @@ def register():
 @app.route("/contact", methods=["GET", "POST"])
 def contact():
     if session.get('logged_in') == True:
-        return render_template("contact.html", username = db.execute("SELECT username FROM users WHERE id = ?", session["logged_in"])[0]["username"])
+        return render_template("contact.html", username = db.execute("SELECT username FROM users WHERE id = ?", session["user_id"])[0]["username"])
     return render_template("contact.html")
