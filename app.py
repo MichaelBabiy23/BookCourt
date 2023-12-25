@@ -5,6 +5,8 @@ from flask import Flask, flash, redirect, render_template, request, session
 from flask_session import Session
 from werkzeug.security import check_password_hash, generate_password_hash
 
+from flask_login import login_required
+
 # Configure application
 app = Flask(__name__)
 
@@ -34,7 +36,6 @@ def escape(s):
     ]:
         s = s.replace(old, new)
     return s
-
 
 @app.after_request
 def after_request(response):
@@ -114,3 +115,9 @@ def contact():
     if session.get('logged_in') == True:
         return render_template("contact.html", username = db.execute("SELECT username FROM users WHERE id = ?", session["user_id"])[0]["username"])
     return render_template("contact.html")
+
+@app.route("/history")
+def history():
+    if session.get('logged_in'):
+        return render_template("history.html", username = db.execute("SELECT username FROM users WHERE id = ?", session["user_id"])[0]["username"])
+    return redirect("/login")
