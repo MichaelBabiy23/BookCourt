@@ -1,31 +1,46 @@
 function checkInput(){
     let user = document.querySelector("#username").value;
+    let pass = document.querySelector("#password").value;
+    let passagain = document.querySelector("#passwordagain").value;
+    var myModal = new bootstrap.Modal(document.getElementById("exampleModal"));
     if (user.length < 4 || user.length > 12)
     {
-        alert("Username must be between 4 to 12 character");
-    }
-    let pass = document.querySelector("#password").value;
-    if (pass.length < 4 || pass.length > 12)
+        myModal.show();
+        document.getElementById("failed").innerHTML="Username must be between 4 and 12 charcters";
+        return false;
+        
+    }   
+    else if (pass.length < 4 || pass.length > 12)
     {
-        alert("Password must be between 4 to 12 character");
+        myModal.show();
+        document.getElementById("failed").innerHTML="Password must be between 4 and 12 charcters";
+        return false;
     }
-    if (!containsNumbers(pass)) 
+    else if (!containsNumbers(pass)) 
     {
-        alert("Password must contain at least one number")
+        myModal.show();
+        document.getElementById("failed").innerHTML="Password must contain at least one number";
+        return false;
     }
-    if (!hasLetter(pass))
+    else if (!hasLetter(pass))
     {
-        alert("Password must contain at least one letter")
+        myModal.show();
+        document.getElementById("failed").innerHTML="Password must contain at least one letter";
+        return false;
     }
-    let passagain = document.querySelector("#passwordagain").value;
-    if (pass != passagain)
+    
+    else if (pass != passagain)
     {
-        alert("Password and confirm must match");
+        myModal.show();
+        document.getElementById("failed").innerHTML="Password must match confirm password ";
+        return false;
     }
 }
+
 function containsNumbers(str) {
     return /\d/.test(str);
 }
+
 function hasLetter(str) {
     return str.match(/[a-z]/);
 }

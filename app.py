@@ -96,6 +96,7 @@ def register():
             info["email"],
             info["phone"]
         )
+        print(duplicate)
         if not duplicate:
             hash = generate_password_hash(info["password"], method="pbkdf2", salt_length=16)
             db.execute(
@@ -106,6 +107,7 @@ def register():
                 info["phone"]
             )
             return redirect("/login")
+        print("lol")
         #TODO : ELSE ALERT!! 
     else:
         return render_template("register.html")
@@ -121,3 +123,7 @@ def history():
     if session.get('logged_in'):
         return render_template("history.html", username = db.execute("SELECT username FROM users WHERE id = ?", session["user_id"])[0]["username"])
     return redirect("/login")
+
+@app.route("/lol")
+def lol():
+    return render_template("lol.html")
