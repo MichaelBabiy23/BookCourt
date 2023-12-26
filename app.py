@@ -124,6 +124,7 @@ def history():
         return render_template("history.html", username = db.execute("SELECT username FROM users WHERE id = ?", session["user_id"])[0]["username"])
     return redirect("/login")
 
-@app.route("/lol")
-def lol():
-    return render_template("lol.html")
+@app.route("/courts")
+def courts():
+    
+    return render_template("courts.html")
