@@ -62,10 +62,10 @@ def login():
         rows = db.execute(
             "SELECT * FROM users WHERE username = ?", username
         )
-        if len(rows) != 1 or not check_password_hash(
-            rows[0]["hash"], request.form.get("password")
-        ):
-            return render_template("login.html")
+        if len(rows) != 1:
+            return render_template("login.html" , fail="username")
+        if not check_password_hash(rows[0]["hash"], request.form.get("password")):
+            return render_template("login.html" , fail="password")
         session["user_id"] = rows[0]["id"]
         session["logged_in"] = True
         return redirect("/")

@@ -1,10 +1,15 @@
-function CheckLogiN() {
+function checkInput() {
     let user = document.querySelector("#username").value;
     let pass = document.querySelector("#password").value;
-    if (user == "" || user == null) {
-        alert("Must provide username")
+    var myModal = new bootstrap.Modal(document.getElementById("exampleModal"));
+    if (user.length == 0) {
+        myModal.show();
+        document.getElementById("failed").innerHTML="Must provide username";
+        return false;
     }
-    if (pass == "" || pass == null) {
-        alert("Must provide password")
+    if (pass.length == 0) {
+        myModal.show();
+        document.getElementById("failed").innerHTML="Must provide password";
+        return false;
     }
 }
