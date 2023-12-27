@@ -96,7 +96,6 @@ def register():
             info["email"],
             info["phone"]
         )
-        print(duplicate)
         if not duplicate:
             hash = generate_password_hash(info["password"], method="pbkdf2", salt_length=16)
             db.execute(
@@ -107,8 +106,12 @@ def register():
                 info["phone"]
             )
             return redirect("/login")
-        print("lol")
-        #TODO : ELSE ALERT!! 
+        elif duplicate[0]["username"]:
+            print(duplicate)
+            return render_template("register.html", fail="username")
+        elif duplicate[0]["email"]:
+            return render_template("register.html", fail="email")
+        return render_template("register.html", fail="phone")
     else:
         return render_template("register.html")
     

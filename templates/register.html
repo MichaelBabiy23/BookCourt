@@ -5,8 +5,7 @@
 <div class="container mt-5">
     <div class="row justify-content-center">
         <div class="col-md-3">
-            <form class="p-4 shadow rounded bg-dark textColor register-container" onsubmit="return checkInput()" action="/register" method="post">
-
+            <form class="p-4 shadow rounded bg-dark textColor register-container" name="{{ fail }}" onsubmit="return checkInput(name)" action="/register" method="post" >
                 <h2 class="text-center mb-4">Sign up</h2>
                 <div class="mb-3">
                     <label for="username" class="form-label">Username</label>

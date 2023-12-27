@@ -1,4 +1,11 @@
-function checkInput(){
+function checkInput(name){
+    field1.setAttribute('name', name);
+    if (name != null) {
+        myModal.show();
+        document.getElementById("failed").innerHTML=name + "already Exist";
+        return false;
+    }
+
     let user = document.querySelector("#username").value;
     let pass = document.querySelector("#password").value;
     let email = document.querySelector("#email").value;
