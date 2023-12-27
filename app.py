@@ -129,5 +129,6 @@ def history():
 
 @app.route("/courts")
 def courts():
-    
-    return render_template("courts.html")
+    if session.get('logged_in'):
+        return render_template("courts.html", username = db.execute("SELECT username FROM users WHERE id = ?", session["user_id"])[0]["username"])
+    return redirect("/login")
