@@ -1,1 +1,75 @@
-few
+{% extends "layout.html" %}
+{% block body %}
+<link href="static/css/courts.css" rel="stylesheet">
+<script src="static/js/courts.js"></script>
+<div id="booking" class="section">
+    <div class="section-center">
+        <div class="container">
+            <div class="row">
+                <div class="booking-form">
+                    <div class="form-header">
+                        <h1>Book your court</h1>
+                    </div>
+                    <form>
+                        <div class="row">
+                            <div class="form-group"> <select class="form-control" required>
+                                    <option value="" selected hidden>Which sport</option>
+                                    <option>Soccer</option>
+                                    <option>Bassketball</option>
+                                    <option>Tennis</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="form-group"> <select class="form-control" required>
+                                    <option value="" selected hidden>Location</option>
+                                    <option>First location</option>
+                                    <option>Second location</option>
+                                    <option>Third location</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="form-group"> <input class="form-control" name="date-input" type="date" required> <span
+                                    class="form-label">Date</span> </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1">
+                                <label class="form-check-label" for="inlineRadio1">1 hour</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2">
+                                <label class="form-check-label" for="inlineRadio2">2 hours</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio3" value="option3" disabled>
+                                <label class="form-check-label" for="inlineRadio3">3 hours (disabled)</label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="form-group">
+                                <!--
+                                <input placeholder="Selected time" type="time" class="form-control" step="3600000" min="08:00:00" max="21:00:00">
+                                -->
+                                <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
+                                    <input type="radio" class="btn-check" name="btnradio" id="btnradio1" autocomplete="off" checked>
+                                    <label class="btn btn-outline-primary" for="btnradio1">08:00</label>
+                                
+                                    <input type="radio" class="btn-check" name="btnradio" id="btnradio2" autocomplete="off">
+                                    <label class="btn btn-outline-primary" for="btnradio2">09:00</label>
+                                
+                                    <input type="radio" class="btn-check" name="btnradio" id="btnradio3" autocomplete="off">
+                                    <label class="btn btn-outline-primary" for="btnradio3">10:00</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-btn"> <button class="submit-btn">Book Now</button> </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock body %}
