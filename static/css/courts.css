@@ -198,3 +198,25 @@ body {
 .form-check{
     padding-left: 10%;
 }
+
+.btn-group {
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-column-gap: 20px;
+    grid-row-gap: 20px;
+    justify-items: stretch;
+    align-items: inital;
+}
+
+.group1 {
+    padding: 20px 24px;
+    cursor: pointer;
+    text-align: center;
+    background-color: #eee;
+    color: black;
+}
+
+.group1:hover {
+    background-color: #3e8e41;
+}

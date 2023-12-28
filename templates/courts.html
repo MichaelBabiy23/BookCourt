@@ -12,18 +12,22 @@
                     </div>
                     <form>
                         <div class="row">
-                            <div class="form-group"> <select class="form-control" required>
+                            <div class="form-group"> <select class="form-control" id="court-selector" onchange="changeListenerCourts()" required>
                                     <option value="" selected hidden>Which sport</option>
-                                    {% for sport in sports %}
-                                    <option>{{ sport }}</option>
+                                    {% for court in courts %}
+                                        <option>{{ court["sport"] }}</option>
                                     {% endfor %}
                                 </select>
                             </div>
                         </div>
                         <div class="row">
-                            <div class="form-group"> <select class="form-control" required>
-                                    <p value="" selected hidden>Location</p>
-                                    
+                            <div class="form-group"> <select class="form-control" id="display-court-name" required>
+                                    <option value="" selected hidden>Which court</option>
+                                    {% autoescape false %}
+                                        {% for court in courts %}
+                                        <option value="{{ court["sport"]}}">{{ court["court_name"] }}</option>
+                                        {% endfor %}
+                                    {% endautoescape %}
                                 </select>
                             </div>
                         </div>
@@ -51,14 +55,10 @@
                                 <input placeholder="Selected time" type="time" class="form-control" step="3600000" min="08:00:00" max="21:00:00">
                                 -->
                                 <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
-                                    <input type="radio" class="btn-check" name="btnradio" id="btnradio1" autocomplete="off" checked>
-                                    <label class="btn btn-outline-primary" for="btnradio1">08:00</label>
-                                
-                                    <input type="radio" class="btn-check" name="btnradio" id="btnradio2" autocomplete="off">
-                                    <label class="btn btn-outline-primary" for="btnradio2">09:00</label>
-                                
-                                    <input type="radio" class="btn-check" name="btnradio" id="btnradio3" autocomplete="off">
-                                    <label class="btn btn-outline-primary" for="btnradio3">10:00</label>
+                                {% for time in range(7, 23) %}
+                                    <input type="radio" class="btn-check group1" name="btnradio" id="{{ time }}" autocomplete="off" checked>
+                                    <label class="btn btn-outline-primary" for="{{ time }}">{{ time }}:00</label>
+                                {% endfor %}
                                 </div>
                             </div>
                         </div>
