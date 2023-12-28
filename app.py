@@ -1,4 +1,5 @@
 import os
+import datetime
 
 from cs50 import SQL
 from flask import Flask, flash, redirect, render_template, request, session
@@ -134,10 +135,35 @@ def courts():
         if request.method == "POST":
             if request.form['book'] == 'check':
                 court_name = request.form.get("court_name")
+                court_id = db.execute("SELECT id FROM courts WHERE court_name = ?", 
+                        court_name
+                        )
+                hours = db.execute("SELECT hour FROM rents WHERE court_id = ? AND date = ?",
+                                   court_id,
+                                   #date
+                                   )
 
             else:
-                return False
 
+                hour = request
+                rent_time = request
+                date = request
+                order_date = datetime.datetime.now().isoformat(sep=" ", timespec="seconds")
+                user_id = session["user_id"]
+                court_name = request
+                court_id = db.execute("SELECT id FROM courts WHERE court_name = ?", 
+                                      court_name
+                                      )
+                db.execute("INSERET INTO users (rent_time, start_time, date, order_date, court_id, user_id) VALUES (?, ?, ?, ?, ?, ?)",
+                           rent_time,
+                           hour,
+                           date,
+                           order_date,
+                           court_id,
+                           user_id
+                           )
+                redirect("/", success=True)
+                return False
         else:
             print("painnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn")
             courts = db.execute("SELECT * FROM courts ORDER BY sport")

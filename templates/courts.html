@@ -65,7 +65,7 @@
                                 -->
                                 <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
                                 {% for time in range(7, 23) %}
-                                    <input type="radio" class="btn-check group1" name="btnradio" onclick="selected(document.getElementById())" autocomplete="off">
+                                    <input type="radio" class="btn-check group1" name="btnradio" onclick="selected()" autocomplete="off">
                                     <label class="btn btn-outline-primary" for="{{ time }}" id="{{ time }}">{{ time }}:00</label>
                                 {% endfor %}
                                 </div>
