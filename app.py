@@ -128,14 +128,21 @@ def history():
         return render_template("history.html", username = db.execute("SELECT username FROM users WHERE id = ?", session["user_id"])[0]["username"], active="true")
     return redirect("/login")
 
-@app.route("/courts")
+@app.route("/courts", methods=["GET", "POST"])
 def courts():
     if session.get('logged_in'):
-        courts = db.execute("SELECT * FROM courts GROUP BY sport ORDER BY sport")
-        #minTime = db.execute("SELECT start_hour FROM courts")
-        return render_template("courts.html",
-                                username = db.execute("SELECT username FROM users WHERE id = ?", session["user_id"])[0]["username"],
-                                sports = sports,
-                                active="true",
-                                )
+        if request.method == "POST":
+            rent_time = request.form.get("")
+        else:
+            print("painnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn")
+            courts = db.execute("SELECT * FROM courts ORDER BY sport")
+            sports = db.execute("SELECT sport FROM courts GROUP BY sport ORDER BY sport")
+            taken
+            print(courts)
+            return render_template("courts.html",
+                                    username = db.execute("SELECT username FROM users WHERE id = ?", session["user_id"])[0]["username"],
+                                    sports= sports,
+                                    courts=courts,
+                                    active="true",
+                                    )
     return redirect("/login")
