@@ -62,10 +62,10 @@ def login():
         rows = db.execute(
             "SELECT * FROM users WHERE username = ?", username
         )
-        if len(rows) != 1 or not check_password_hash(
-            rows[0]["hash"], request.form.get("password")
-        ):
-            return render_template("login.html")
+        if len(rows) != 1:
+            return render_template("login.html" , fail="username")
+        if not check_password_hash(rows[0]["hash"], request.form.get("password")):
+            return render_template("login.html" , fail="password")
         session["user_id"] = rows[0]["id"]
         session["logged_in"] = True
         return redirect("/")
@@ -106,12 +106,13 @@ def register():
                 info["phone"]
             )
             return redirect("/login")
-        elif duplicate[0]["username"]:
-            print(duplicate)
-            return render_template("register.html", fail="username")
-        elif duplicate[0]["email"]:
-            return render_template("register.html", fail="email")
-        return render_template("register.html", fail="phone")
+        elif duplicate[0]["username"] == info["username"]:
+            print(duplicate , "yes")
+            return render_template("register.html", fail="Username")
+        elif duplicate[0]["email"] == info["email"]:
+            print(duplicate , "no")
+            return render_template("register.html", fail="Email")
+        return render_template("register.html", fail="Phone")
     else:
         return render_template("register.html")
     

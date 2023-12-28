@@ -13,7 +13,3 @@ body {
 .login-container:hover {
     opacity: 100%;
 }
-
-.modal-header {
-    background-color: #ca2246;
-}

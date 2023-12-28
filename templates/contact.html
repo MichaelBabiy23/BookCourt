@@ -1,7 +1,8 @@
 {% extends "layout.html" %}
 {% block body %}
+    <link href="static/css/login.css" rel="stylesheet" >
     <div class="container mt-5 textColor col-md-3">
-        <form id="contactForm">
+        <form id="contactForm" class="p-4 shadow rounded bg-dark textColor login-container">
             {% if session["user_id"] %}
             <div class="mb-3">
                 <h3>

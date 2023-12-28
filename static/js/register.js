@@ -1,11 +1,4 @@
-function checkInput(name){
-    field1.setAttribute('name', name);
-    if (name != null) {
-        myModal.show();
-        document.getElementById("failed").innerHTML=name + "already Exist";
-        return false;
-    }
-
+function checkInput(){
     let user = document.querySelector("#username").value;
     let pass = document.querySelector("#password").value;
     let email = document.querySelector("#email").value;
@@ -18,20 +11,20 @@ function checkInput(name){
         return false;
         
     }
-    else if (phone.length == 0)
-    {
-        myModal.show();
-        document.getElementById("failed").innerHTML="Must write phone";
-        return false;
-        
-    }
     else if (email.length == 0)
     {
         myModal.show();
         document.getElementById("failed").innerHTML="Must write email";
         return false;
         
-    }         
+    }   
+    else if (phone.length == 0)
+    {
+        myModal.show();
+        document.getElementById("failed").innerHTML="Must write phone";
+        return false;
+        
+    }     
     else if (pass.length < 4 || pass.length > 12)
     {
         myModal.show();
