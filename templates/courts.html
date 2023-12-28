@@ -2,6 +2,11 @@
 {% block body %}
 <link href="static/css/courts.css" rel="stylesheet">
 <script src="static/js/courts.js"></script>
+{% if active %}
+<script>
+    document.getElementById("courts").className = "nav-link active";
+</script>
+{% endif %}
 <div id="booking" class="section">
     <div class="section-center">
         <div class="container">
