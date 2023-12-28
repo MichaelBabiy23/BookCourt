@@ -131,7 +131,7 @@ def history():
 @app.route("/courts")
 def courts():
     if session.get('logged_in'):
-        sports = db.execute("SELECT sport FROM courts GROUP BY sport ORDER BY sport")[0]["sport"]
+        courts = db.execute("SELECT * FROM courts GROUP BY sport ORDER BY sport")
         #minTime = db.execute("SELECT start_hour FROM courts")
         return render_template("courts.html",
                                 username = db.execute("SELECT username FROM users WHERE id = ?", session["user_id"])[0]["username"],
