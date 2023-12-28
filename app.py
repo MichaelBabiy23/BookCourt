@@ -132,7 +132,12 @@ def history():
 def courts():
     if session.get('logged_in'):
         if request.method == "POST":
-            rent_time = request.form.get("")
+            if request.form['book'] == 'check':
+                court_name = request.form.get("court_name")
+
+            else:
+                return False
+
         else:
             print("painnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn")
             courts = db.execute("SELECT * FROM courts ORDER BY sport")

@@ -15,3 +15,7 @@ function changeListenerCourts() {
     }
     selectobject.selectionIndex = 0;
 }
+
+function selected() {
+    
+}
