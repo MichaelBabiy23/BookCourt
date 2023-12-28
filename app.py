@@ -49,8 +49,8 @@ def after_request(response):
 def index():
     if session.get('logged_in'):
         username = db.execute("SELECT username FROM users WHERE id = ?", session["user_id"])[0]["username"]                
-        return render_template("index.html", username=username)
-    return render_template("index.html")
+        return render_template("index.html", username=username, active="true")
+    return render_template("index.html", active="true")
 
 
 @app.route("/login", methods=["GET", "POST"])
@@ -63,14 +63,14 @@ def login():
             "SELECT * FROM users WHERE username = ?", username
         )
         if len(rows) != 1:
-            return render_template("login.html" , fail="username")
+            return render_template("login.html" , fail="username", active="true")
         if not check_password_hash(rows[0]["hash"], request.form.get("password")):
-            return render_template("login.html" , fail="password")
+            return render_template("login.html" , fail="password", active="true")
         session["user_id"] = rows[0]["id"]
         session["logged_in"] = True
         return redirect("/")
     else:
-        return render_template("login.html")
+        return render_template("login.html" , active="true")
 
 
 @app.route("/logout")
@@ -108,28 +108,28 @@ def register():
             return redirect("/login")
         elif duplicate[0]["username"] == info["username"]:
             print(duplicate , "yes")
-            return render_template("register.html", fail="Username")
+            return render_template("register.html", fail="Username", active="true")
         elif duplicate[0]["email"] == info["email"]:
             print(duplicate , "no")
-            return render_template("register.html", fail="Email")
-        return render_template("register.html", fail="Phone")
+            return render_template("register.html", fail="Email", active="true")
+        return render_template("register.html", fail="Phone", active="true")
     else:
-        return render_template("register.html")
+        return render_template("register.html", active="true")
     
 @app.route("/contact", methods=["GET", "POST"])
 def contact():
     if session.get('logged_in') == True:
-        return render_template("contact.html", username = db.execute("SELECT username FROM users WHERE id = ?", session["user_id"])[0]["username"])
-    return render_template("contact.html")
+        return render_template("contact.html", username = db.execute("SELECT username FROM users WHERE id = ?", session["user_id"])[0]["username"], active="true")
+    return render_template("contact.html", active="true")
 
 @app.route("/history")
 def history():
     if session.get('logged_in'):
-        return render_template("history.html", username = db.execute("SELECT username FROM users WHERE id = ?", session["user_id"])[0]["username"])
+        return render_template("history.html", username = db.execute("SELECT username FROM users WHERE id = ?", session["user_id"])[0]["username"], active="true")
     return redirect("/login")
 
 @app.route("/courts")
 def courts():
     if session.get('logged_in'):
-        return render_template("courts.html", username = db.execute("SELECT username FROM users WHERE id = ?", session["user_id"])[0]["username"])
+        return render_template("courts.html", username = db.execute("SELECT username FROM users WHERE id = ?", session["user_id"])[0]["username"], active="true")
     return redirect("/login")

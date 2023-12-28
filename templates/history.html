@@ -1,6 +1,11 @@
 {% extends "layout.html" %}
 {% block body %}
 <link href="static/css/history.css" rel="stylesheet">
+{% if active %}
+<script>
+    document.getElementById("history").className = "nav-link active";
+</script>
+{% endif %}
     <h2>Live oreders and past</h2>
     <div class="row">
         <div class="column">

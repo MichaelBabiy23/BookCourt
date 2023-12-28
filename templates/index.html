@@ -1,6 +1,11 @@
 {% extends "layout.html" %}
 {% block body %}
     <script src="static/js/homepage.js"></script>
+    {% if active %}
+    <script>
+        document.getElementById("home").className = "nav-link active";
+    </script>
+    {% endif %}
     <div class="content">
         <button class="float-end" id="myBtn" onclick="videoPlayPause()">Pause</button>
         <h1>Welcome!</h1>

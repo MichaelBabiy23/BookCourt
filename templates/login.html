@@ -1,54 +1,59 @@
 {% extends "layout.html" %}
 {% block body %}
-    <link href="static/css/login.css" rel="stylesheet" >
-    <script src="static/js/login.js"></script>
-    <div class="container mt-5">
-        <div class="row justify-content-center">
-            <div class="col-md-3">
-                <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                    <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Register failed</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <div class="modal-body">
-                            <p id="failed"></p>
-                        </div>
+<link href="static/css/login.css" rel="stylesheet" >
+<script src="static/js/login.js"></script>
+{% if active %}
+<script>
+    document.getElementById("login").className = "nav-link active";
+</script>
+{% endif %}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-3">
+            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Register failed</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
+                    <div class="modal-body">
+                        <p id="failed"></p>
                     </div>
                 </div>
-                {% if fail %}
-                <script>
-                    var myModal = new bootstrap.Modal(document.getElementById("exampleModal"));
-                    myModal.show();
-                </script>        
-                    {% if fail == 'username' %}
-                    <script>
-                        document.getElementById("failed").innerHTML="Username not found";
-                    </script>
-                    {% else %}
-                    <script>
-                        document.getElementById("failed").innerHTML="Password not found";
-                    </script>
-                    {% endif %}
-                {% endif %}
-                <form class="p-4 shadow rounded bg-dark textColor login-container" onsubmit="return checkInput()" action="/login" method="post">
-                    <h2 class="text-center mb-4">Login</h2>
-                    <div class="mb-3">
-                        <label for="username" class="form-label">Username</label>
-                        <input type="text" class="form-control" id="username" placeholder="Enter your username" name="username">
-                    </div>
-                    <div class="mb-3">
-                        <label for="password" class="form-label">Password</label>
-                        <input type="password" class="form-control" id="password" placeholder="Enter your password" name="password">
-                    </div>
-                    <div class="text-center">
-                        <button type="submit" class="btn btn-primary">Login</button>
-                    </div>
-                    <p class="mt-3 text-center">Don't have an account? <a href="register">Register</a></p>
-                </form>
+                </div>
             </div>
+            {% if fail %}
+            <script>
+                var myModal = new bootstrap.Modal(document.getElementById("exampleModal"));
+                myModal.show();
+            </script>        
+                {% if fail == 'username' %}
+                <script>
+                    document.getElementById("failed").innerHTML="Username not found";
+                </script>
+                {% else %}
+                <script>
+                    document.getElementById("failed").innerHTML="Password not found";
+                </script>
+                {% endif %}
+            {% endif %}
+            <form class="p-4 shadow rounded bg-dark textColor login-container" onsubmit="return checkInput()" action="/login" method="post">
+                <h2 class="text-center mb-4">Login</h2>
+                <div class="mb-3">
+                    <label for="username" class="form-label">Username</label>
+                    <input type="text" class="form-control" id="username" placeholder="Enter your username" name="username">
+                </div>
+                <div class="mb-3">
+                    <label for="password" class="form-label">Password</label>
+                    <input type="password" class="form-control" id="password" placeholder="Enter your password" name="password">
+                </div>
+                <div class="text-center">
+                    <button type="submit" class="btn btn-primary">Login</button>
+                </div>
+                <p class="mt-3 text-center">Don't have an account? <a href="register">Register</a></p>
+            </form>
         </div>
     </div>
+</div>
 {% endblock body %}

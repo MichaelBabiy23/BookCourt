@@ -2,6 +2,11 @@
 {% block body %}
 <link href="static/css/register.css" rel="stylesheet" >
 <script src="static/js/register.js"></script>
+{% if active %}
+<script>
+    document.getElementById("register").className = "nav-link active";
+</script>
+{% endif %}
 <div class="container mt-5">
     <div class="row justify-content-center">
         <div class="col-md-3">
