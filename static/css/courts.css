@@ -28,7 +28,8 @@ body {
     padding: 40px;
     overflow: hidden;
     border-radius: 5px;
-    z-index: 20
+    z-index: 20;
+    opacity: 70%;
 }
 
 .booking-form::before {
@@ -38,8 +39,12 @@ body {
     right: 0;
     bottom: 0;
     top: 0;
-    background: rgba(0, 0, 0, 0.7);
-    z-index: -1
+    background: rgba(0, 0, 0);
+    z-index: -1;
+}
+
+.booking-form:hover{
+    opacity: 100%;
 }
 
 .booking-form .form-header {
