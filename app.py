@@ -137,7 +137,6 @@ def courts():
             print("painnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn")
             courts = db.execute("SELECT * FROM courts ORDER BY sport")
             sports = db.execute("SELECT sport FROM courts GROUP BY sport ORDER BY sport")
-            taken
             print(courts)
             return render_template("courts.html",
                                     username = db.execute("SELECT username FROM users WHERE id = ?", session["user_id"])[0]["username"],
