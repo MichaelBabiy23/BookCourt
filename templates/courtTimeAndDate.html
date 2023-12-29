@@ -7,6 +7,19 @@
     document.getElementById("courts").className = "nav-link active";
 </script>
 {% endif %}
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+    <div class="modal-content">
+        <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Error</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            <p id="failed"></p>
+        </div>
+    </div>
+    </div>
+</div>
 <div id="booking" class="section">
     <div class="section-center">
         <div class="container">
@@ -22,11 +35,11 @@
                         </div>
                         <div class="form-group">
                             <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" name="rent_hour" id="inlineRadio1" value="1" onchange="changeListenerDate(1, {{ hours }})" required>
+                                <input class="form-check-input" type="radio" name="rent_hour" id="inlineRadio1" value="1" onchange="checkDate(1, {{ hours }})" required>
                                 <label class="form-check-label" for="inlineRadio1">1 hour</label>
                             </div>
                             <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" name="rent_hour" id="inlineRadio2" value="2" onchange="changeListenerDate(2, {{ hours }})">
+                                <input class="form-check-input" type="radio" name="rent_hour" id="inlineRadio2" value="2" onchange="checkDate(2, {{ hours }})">
                                 <label class="form-check-label" for="inlineRadio2">2 hours</label>
                             </div>
                             <div class="form-check form-check-inline">

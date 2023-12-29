@@ -220,3 +220,7 @@ body {
 .group1:hover {
     background-color: #3e8e41;
 }
+
+.modal-header {
+    background-color: #ca2246;
+}
