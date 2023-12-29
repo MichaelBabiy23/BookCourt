@@ -2,7 +2,7 @@ import os
 import datetime
 
 from cs50 import SQL
-from flask import Flask, flash, redirect, render_template, request, session
+from flask import Flask, flash, redirect, render_template, request, session, url_for
 from flask_session import Session
 from werkzeug.security import check_password_hash, generate_password_hash
 
@@ -159,39 +159,8 @@ def history():
 def courts():
     if session.get('logged_in'):
         if request.method == "POST":
-            user_id = session["user_id"]
-
-            if request.form['book'] == 'check':
-                court_name = request.form.get("court_name")
-                court_id = db.execute("SELECT id FROM courts WHERE court_name = ?", 
-                        court_name
-                        )
-                hours = db.execute("SELECT hour FROM rents WHERE court_id = ? AND date = ?",
-                                   court_id,
-                                   #date
-                                   )
-
-            else:
-                date = request.form.get("date-input")
-                court_name = request.form.get("court_name")
-                court_hours = db.execute("SELECT start_hour, end_hour FROM courts WHERE court_name = ?",
-                    court_name
-                    )
-                selected_hour = request.form['hours']
-                rent_hour = request.form['rent_hour']
-                order_date = datetime.datetime.now().isoformat(sep=" ", timespec="seconds")
-                court_id = db.execute("SELECT id FROM courts WHERE court_name = ?", 
-                                      court_name
-                                      )[0]["id"]
-                db.execute("INSERT INTO rents (rent_time, start_time, date, order_date, court_id, user_id) VALUES (?, ?, ?, ?, ?, ?)",
-                           rent_hour,
-                           selected_hour,
-                           date,
-                           order_date,
-                           court_id,
-                           user_id
-                           )
-                return redirect("history")
+            court_name = request.form.get("court_name")
+            return redirect(url_for("courtTimeAndDate", court_name=court_name))
         else:
             courts = db.execute("SELECT * FROM courts ORDER BY sport")
             sports = db.execute("SELECT sport FROM courts GROUP BY sport ORDER BY sport")
@@ -202,3 +171,32 @@ def courts():
                                     active="true",
                                     )
     return redirect("/login")
+
+@app.route("/courtTimeAndDate/<court_name>", methods=["GET", "POST"])
+def courtTimeAndDate(court_name="Test"):
+    if request.method == "GET":
+        return render_template("courtTimeAndDate.html",
+                            active="true", 
+                            username = db.execute("SELECT username FROM users WHERE id = ?", session["user_id"])[0]["username"],
+                           )
+    else:
+        date = request.form.get("date-input")
+        court_hours = db.execute("SELECT start_hour, end_hour FROM courts WHERE court_name = ?",
+            court_name
+            )
+        selected_hour = request.form['hours']
+        rent_hour = request.form['rent_hour']
+        order_date = datetime.datetime.now().isoformat(sep=" ", timespec="seconds")
+        court_id = db.execute("SELECT id FROM courts WHERE court_name = ?", 
+                                court_name
+                                )[0]["id"]
+        user_id = session["user_id"]
+        db.execute("INSERT INTO rents (rent_time, start_time, date, order_date, court_id, user_id) VALUES (?, ?, ?, ?, ?, ?)",
+                    rent_hour,
+                    selected_hour,
+                    date,
+                    order_date,
+                    court_id,
+                    user_id
+                    )
+        return redirect("history")
