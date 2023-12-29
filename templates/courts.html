@@ -15,38 +15,41 @@
                     <div class="form-header">
                         <h1>Book your court</h1>
                     </div>
-                    <form>
+                    <form action="" method="post">
                         <div class="row">
                             <div class="form-group"> <select class="form-control" id="court-selector" onchange="changeListenerCourts()" required>
                                     <option value="" selected hidden>Which sport</option>
-                                    {% for court in courts %}
-                                        <option>{{ court["sport"] }}</option>
+                                    {% for sport in sports %}
+                                        <option>{{ sport["sport"] }}</option>
                                     {% endfor %}
                                 </select>
                             </div>
                         </div>
                         <div class="row">
-                            <div class="form-group"> <select class="form-control" id="display-court-name" required>
+                            <div class="form-group">
+                                 <select class="form-control" id="display-court-name" name="court_name" required>
                                     <option value="" selected hidden>Which court</option>
                                     {% autoescape false %}
                                         {% for court in courts %}
-                                        <option value="{{ court["sport"]}}">{{ court["court_name"] }}</option>
+                                        <option id="{{ court["sport"]}}" value="{{ court["court_name"] }}">{{ court["court_name"] }}</option>
                                         {% endfor %}
                                     {% endautoescape %}
                                 </select>
                             </div>
                         </div>
+
+                        <div class="row form-group"> <button class="submit-btn" name="book" value="check">Check availability</button> </div>
                         <div class="row">
                             <div class="form-group"> <input class="form-control" name="date-input" type="date" required> <span
                                     class="form-label">Date</span> </div>
                         </div>
                         <div class="form-group">
                             <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1">
+                                <input class="form-check-input" type="radio" name="rent_hour" id="inlineRadio1" value="1" checked>
                                 <label class="form-check-label" for="inlineRadio1">1 hour</label>
                             </div>
                             <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2">
+                                <input class="form-check-input" type="radio" name="rent_hour" id="inlineRadio2" value="2">
                                 <label class="form-check-label" for="inlineRadio2">2 hours</label>
                             </div>
                             <div class="form-check form-check-inline">
@@ -61,13 +64,13 @@
                                 -->
                                 <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
                                 {% for time in range(7, 23) %}
-                                    <input type="radio" class="btn-check group1" name="btnradio" id="{{ time }}" autocomplete="off" checked>
+                                    <input type="radio" class="btn-check group1" name="hours" id="{{ time }}" value="{{ time }}" autocomplete="off">
                                     <label class="btn btn-outline-primary" for="{{ time }}">{{ time }}:00</label>
                                 {% endfor %}
                                 </div>
                             </div>
                         </div>
-                        <div class="form-btn"> <button class="submit-btn">Book Now</button> </div>
+                        <div class="form-btn"> <button class="submit-btn" name="book" value="book">Book Now</button> </div>
                     </form>
                 </div>
             </div>

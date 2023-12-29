@@ -6,6 +6,26 @@
     document.getElementById("history").className = "nav-link active";
 </script>
 {% endif %}
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+    <div class="modal-content">
+        <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel"></h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            <p id="success"></p>
+        </div>
+    </div>
+    </div>
+</div>
+{% if success %}
+<script>
+    var myModal = new bootstrap.Modal(document.getElementById("exampleModal"));
+    myModal.show();
+    document.getElementById("success").innerHTML="Your booking has been saved";
+</script>
+{% endif %}
     <h2>Live oreders and past</h2>
     <div class="row">
         <div class="column">
@@ -13,17 +33,28 @@
                 <thead>
                 <tr>
                     <th>#</th>
+                    <th>Order date</th>
                     <th>Date</th>
                     <th>Court name</th>
                     <th>From hour</th>
-                    <th>To hour</th>
-                    <th>Location</th>
+                    <th>To hour</th>    
                     <th>Price</th>
                     <th>Cancel Option</th>
                 </tr>
                 </thead>
                 <tbody>
-
+                    {% for act in actives %}
+                    <tr>
+                        <td>0</td>
+                        <td>{{  act.order_date }}</td>
+                        <td>{{  act.date }}</td>
+                        <td>{{  act.court_id }}</td>
+                        <td>{{  act.start_time }}:00</td>
+                        <td>{{  act.start_time+act.rent_time }}:00</td>
+                        <td>10$</td>
+                        <td>Cancel</td>
+                    </tr>
+                    {% endfor %}
                 </tbody>
             </table>
         </div>
@@ -32,16 +63,26 @@
                 <thead>
                     <tr>
                         <th>#</th>
+                        <th>Order date</th>
                         <th>Date</th>
                         <th>Court name</th>
                         <th>From hour</th>
                         <th>To hour</th>
-                        <th>Location</th>
                         <th>Price</th>
                     </tr>
                 </thead>
                 <tbody>
-                
+                    {% for pass in passed %}
+                    <tr>
+                        <td>0</td>
+                        <td>{{  pass.order_date }}</td>
+                        <td>{{  pass.date }}</td>
+                        <td>{{  pass.court_id }}</td>
+                        <td>{{  pass.start_time }}:00</td>
+                        <td>{{  pass.start_time+pass.rent_time }}:00</td>
+                        <td>10$</td>
+                    </tr>
+                    {% endfor %}
                 </tbody>
             </table>
         </div>
