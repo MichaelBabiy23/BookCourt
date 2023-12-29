@@ -136,7 +136,7 @@ def history():
                             curr_date
                             )
         counter = 0
-        while curr_date == actives[counter]["date"]:
+        while actives and actives[counter] and curr_date == actives[counter]["date"]:
             print(curr_hour)
             print(actives[counter]["start_time"])
             if actives[counter]["start_time"] <= curr_hour:
