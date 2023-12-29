@@ -137,8 +137,6 @@ def history():
                             )
         counter = 0
         while actives and actives[counter] and curr_date == actives[counter]["date"]:
-            print(curr_hour)
-            print(actives[counter]["start_time"])
             if actives[counter]["start_time"] <= curr_hour:
                 passed.insert(0, actives[counter])
                 del actives[counter]
@@ -183,15 +181,19 @@ def courts():
 @app.route("/courtTimeAndDate/<court_name>", methods=["GET", "POST"])
 def courtTimeAndDate(court_name="Test"):
     if request.method == "GET":
+        court_hours = db.execute("SELECT start_hour, end_hour FROM courts WHERE court_name = ?",
+            court_name
+        )
+        curr_date = datetime.datetime.now().strftime("%Y-%m-%d")
         return render_template("courtTimeAndDate.html",
                             active="true", 
                             username = db.execute("SELECT username FROM users WHERE id = ?", session["user_id"])[0]["username"],
+                            min=court_hours[0]["start_hour"],
+                            max=court_hours[0]["end_hour"],
+                            hours= db.execute("SELECT date, start_time, rent_time FROM rents WHERE date >= ?", curr_date)
                            )
     else:
         date = request.form.get("date-input")
-        court_hours = db.execute("SELECT start_hour, end_hour FROM courts WHERE court_name = ?",
-            court_name
-            )
         selected_hour = request.form['hours']
         rent_hour = request.form['rent_hour']
         order_date = datetime.datetime.now().isoformat(sep=" ", timespec="seconds")

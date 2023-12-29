@@ -1,8 +1,3 @@
-window.onload = function () {
-    var today = new Date().toISOString().split('T')[0];
-    document.getElementsByName("date-input")[0].setAttribute('min', today);
-}
-
 function changeListenerCourts() {
     var value = document.getElementById("court-selector").value;
     var selectobject = document.getElementById("display-court-name");
