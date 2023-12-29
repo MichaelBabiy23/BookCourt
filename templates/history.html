@@ -6,6 +6,26 @@
     document.getElementById("history").className = "nav-link active";
 </script>
 {% endif %}
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+    <div class="modal-content">
+        <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel"></h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            <p id="success"></p>
+        </div>
+    </div>
+    </div>
+</div>
+{% if success %}
+<script>
+    var myModal = new bootstrap.Modal(document.getElementById("exampleModal"));
+    myModal.show();
+    document.getElementById("succsess").innerHTML="Your booking has been saved";
+</script>
+{% endif %}
     <h2>Live oreders and past</h2>
     <div class="row">
         <div class="column">

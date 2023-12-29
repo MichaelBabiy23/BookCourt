@@ -9,30 +9,12 @@
     <div class="container mt-5">
         <div class="row justify-content-center">
             <div class="col-md-3">
-                <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                    <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel"></h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <div class="modal-body">
-                            <p id="failed"></p>
-                        </div>
-                    </div>
-                    </div>
-                </div>
+            <div class="content">
+                <button class="float-end" id="myBtn" onclick="videoPlayPause()">Pause</button>
+                <h1>Welcome!</h1>
+                <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Possimus rerum repellat dolore cumque cupiditate recusandae aspernatur asperiores nemo voluptatem quibusdam, deleniti ipsum in nobis atque itaque cum quo! Praesentium, dolor!</p>
+            </div>
             </div>
         </div>
-        {% if success %}
-        <script>
-            var myModal = new bootstrap.Modal(document.getElementById("exampleModal"));
-            myModal.show();
-            document.getElementById("failed").innerHTML="Your booking has been saved";
-        </script>
-    <div class="content">
-        <button class="float-end" id="myBtn" onclick="videoPlayPause()">Pause</button>
-        <h1>Welcome!</h1>
-        <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Possimus rerum repellat dolore cumque cupiditate recusandae aspernatur asperiores nemo voluptatem quibusdam, deleniti ipsum in nobis atque itaque cum quo! Praesentium, dolor!</p>
     </div>
 {% endblock body %}

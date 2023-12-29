@@ -108,10 +108,8 @@ def register():
             )
             return redirect("/login")
         elif duplicate[0]["username"] == info["username"]:
-            print(duplicate , "yes")
             return render_template("register.html", fail="Username", active="true")
         elif duplicate[0]["email"] == info["email"]:
-            print(duplicate , "no")
             return render_template("register.html", fail="Email", active="true")
         return render_template("register.html", fail="Phone", active="true")
     else:
@@ -133,6 +131,8 @@ def history():
 def courts():
     if session.get('logged_in'):
         if request.method == "POST":
+            user_id = session["user_id"]
+
             if request.form['book'] == 'check':
                 court_name = request.form.get("court_name")
                 court_id = db.execute("SELECT id FROM courts WHERE court_name = ?", 
@@ -144,31 +144,40 @@ def courts():
                                    )
 
             else:
-
-                hour = request
-                rent_time = request
-                date = request
+                date = request.form.get("date-input")
+                court_name = request.form.get("court_name")
+                court_hours = db.execute("SELECT start_hour, end_hour FROM courts WHERE court_name = ?",
+                    court_name
+                    )
+                print(court_hours[0])
+                for hour in range(court_hours[0]["start_hour"], (court_hours[1]["end_hour"]+1)):
+                    radio_hour = request.form.get(hour)
+                    checked_att = radio_hour.get_attribute("checked")
+                    if("checked" in checked_att):
+                        selected_hour = hour
+                        break
+                radio_rent_hour = request.form.get("nlineRadioOptions1")
+                checked_att = radio_rent_hour.get_attribute("checked")
+                if("checked" in checked_att):
+                    rent_hour = 1
+                else:
+                    rent_hour = 2
                 order_date = datetime.datetime.now().isoformat(sep=" ", timespec="seconds")
-                user_id = session["user_id"]
-                court_name = request
                 court_id = db.execute("SELECT id FROM courts WHERE court_name = ?", 
                                       court_name
                                       )
-                db.execute("INSERET INTO users (rent_time, start_time, date, order_date, court_id, user_id) VALUES (?, ?, ?, ?, ?, ?)",
-                           rent_time,
-                           hour,
+                db.execute("INSERET INTO rents (rent_time, start_time, date, order_date, court_id, user_id) VALUES (?, ?, ?, ?, ?, ?)",
+                           rent_hour,
+                           selected_hour,
                            date,
                            order_date,
                            court_id,
                            user_id
                            )
-                redirect("/", success=True)
-                return False
+                return redirect("/history", success=True)
         else:
-            print("painnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn")
             courts = db.execute("SELECT * FROM courts ORDER BY sport")
             sports = db.execute("SELECT sport FROM courts GROUP BY sport ORDER BY sport")
-            print(courts)
             return render_template("courts.html",
                                     username = db.execute("SELECT username FROM users WHERE id = ?", session["user_id"])[0]["username"],
                                     sports= sports,

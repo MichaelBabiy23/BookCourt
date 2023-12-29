@@ -46,3 +46,7 @@ h2{
         width: 100%;
     }
 }
+
+.modal-header {
+    background-color: #19c962;
+}
