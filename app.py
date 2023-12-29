@@ -207,4 +207,4 @@ def courtTimeAndDate(court_name="Test"):
                     court_id,
                     user_id
                     )
-        return redirect("history")
+        return redirect("/history")
