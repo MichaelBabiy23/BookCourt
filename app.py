@@ -127,26 +127,34 @@ def history():
         user = session["user_id"]
         curr_date = datetime.datetime.now().strftime("%Y-%m-%d")
         curr_hour = datetime.datetime.now().hour
-        passed = db.execute("SELECT rent_time, start_time, date, order_date, court_id FROM rents WHERE user_id = ? AND date < ? AND start_time < ? ORDER BY date DESC, start_time",
+        passed = db.execute("SELECT rent_time, start_time, date, order_date, court_id FROM rents WHERE user_id = ? AND date < ? ORDER BY date DESC, start_time",
                             user,
-                            curr_date,
-                            curr_hour
+                            curr_date
                             )
-        passed[0]["counter"] = 0
-        for pas in passed:
-            pas["court_id"] = db.execute("SELECT court_name FROM courts WHERE id = ?", pas["court_id"])
-            passed["counter"] += 1
-        actives = db.execute("SELECT rent_time, start_time, date, order_date, court_id FROM rents WHERE user_id = ? AND date >= ? AND start_time >= ? ORDER BY date DESC, start_time",
+        actives = db.execute("SELECT rent_time, start_time, date, order_date, court_id FROM rents WHERE user_id = ? AND date >= ? ORDER BY date, start_time",
                             user,
-                            curr_date,
-                            curr_hour
+                            curr_date
                             )
-        actives[0]["counter"] = 0
-        for act in actives:
-            act["court_id"] = db.execute("SELECT court_name FROM courts WHERE id = ?", act["court_id"])[0]["court_name"]
-            actives["counter"] += 1
-        print(passed)
-        print(actives)
+        counter = 0
+        while curr_date == actives[counter]["date"]:
+            print(curr_hour)
+            print(actives[counter]["start_time"])
+            if actives[counter]["start_time"] <= curr_hour:
+                passed.insert(0, actives[counter])
+                del actives[counter]
+            counter += 1
+        counter = 0
+        if passed:
+            for pas in passed:
+                pas["court_id"] = db.execute("SELECT court_name FROM courts WHERE id = ?", pas["court_id"])[0]["court_name"]
+                pas["counter"] = counter
+                counter += 1
+        counter = 0
+        if actives:
+            for act in actives:
+                act["court_id"] = db.execute("SELECT court_name FROM courts WHERE id = ?", act["court_id"])[0]["court_name"]
+                act["counter"] = counter
+                counter += 1
         return render_template("history.html", 
                             username=db.execute("SELECT username FROM users WHERE id = ?", user)[0]["username"],
                             active="true",

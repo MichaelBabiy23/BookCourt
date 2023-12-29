@@ -45,12 +45,12 @@
                 <tbody>
                     {% for act in actives %}
                     <tr>
-                        <td>0</td>
-                        <td>{{  act.order_date }}</td>
-                        <td>{{  act.date }}</td>
-                        <td>{{  act.court_id }}</td>
-                        <td>{{  act.start_time }}:00</td>
-                        <td>{{  act.start_time+act.rent_time }}:00</td>
+                        <td>{{ act.counter+1 }}</td>
+                        <td>{{ act.order_date }}</td>
+                        <td>{{ act.date }}</td>
+                        <td>{{ act.court_id }}</td>
+                        <td>{{ act.start_time }}:00</td>
+                        <td>{{ act.start_time+act.rent_time }}:00</td>
                         <td>10$</td>
                         <td>Cancel</td>
                     </tr>
@@ -74,12 +74,12 @@
                 <tbody>
                     {% for pass in passed %}
                     <tr>
-                        <td>0</td>
-                        <td>{{  pass.order_date }}</td>
-                        <td>{{  pass.date }}</td>
-                        <td>{{  pass.court_id }}</td>
-                        <td>{{  pass.start_time }}:00</td>
-                        <td>{{  pass.start_time+pass.rent_time }}:00</td>
+                        <td>{{ pass.counter+1 }}</td>
+                        <td>{{ pass.order_date }}</td>
+                        <td>{{ pass.date }}</td>
+                        <td>{{ pass.court_id }}</td>
+                        <td>{{ pass.start_time }}:00</td>
+                        <td>{{ pass.start_time+pass.rent_time }}:00</td>
                         <td>10$</td>
                     </tr>
                     {% endfor %}
