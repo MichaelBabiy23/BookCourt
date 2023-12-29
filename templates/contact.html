@@ -1,13 +1,13 @@
 {% extends "layout.html" %}
 {% block body %}
-<link href="static/css/contact.css" rel="stylesheet" >
+<link href="static/css/contacts.css" rel="stylesheet" >
 {% if active %}
 <script>
     document.getElementById("contact").className = "nav-link active";
 </script>
 {% endif %}
-<div class="container mt-5 textColor col-md-3">
-    <form id="contactForm" class="p-4 shadow rounded bg-dark textColor login-container">
+<div class="container mt-5 col-md-3">
+    <form id="contactForm" class="p-4 shadow rounded bg-dark whiteText login-container">
         {% if session["user_id"] %}
         <div class="mb-3">
             <h3>
