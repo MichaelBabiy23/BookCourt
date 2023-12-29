@@ -124,7 +124,35 @@ def contact():
 @app.route("/history")
 def history():
     if session.get('logged_in'):
-        return render_template("history.html", username = db.execute("SELECT username FROM users WHERE id = ?", session["user_id"])[0]["username"], active="true")
+        user = session["user_id"]
+        curr_date = datetime.datetime.now().strftime("%Y-%m-%d")
+        curr_hour = datetime.datetime.now().hour
+        passed = db.execute("SELECT rent_time, start_time, date, order_date, court_id FROM rents WHERE user_id = ? AND date < ? AND start_time < ? ORDER BY date DESC, start_time",
+                            user,
+                            curr_date,
+                            curr_hour
+                            )
+        passed[0]["counter"] = 0
+        for pas in passed:
+            pas["court_id"] = db.execute("SELECT court_name FROM courts WHERE id = ?", pas["court_id"])
+            passed["counter"] += 1
+        actives = db.execute("SELECT rent_time, start_time, date, order_date, court_id FROM rents WHERE user_id = ? AND date >= ? AND start_time >= ? ORDER BY date DESC, start_time",
+                            user,
+                            curr_date,
+                            curr_hour
+                            )
+        actives[0]["counter"] = 0
+        for act in actives:
+            act["court_id"] = db.execute("SELECT court_name FROM courts WHERE id = ?", act["court_id"])[0]["court_name"]
+            actives["counter"] += 1
+        print(passed)
+        print(actives)
+        return render_template("history.html", 
+                            username=db.execute("SELECT username FROM users WHERE id = ?", user)[0]["username"],
+                            active="true",
+                            passed=passed,
+                            actives=actives
+                            )
     return redirect("/login")
 
 @app.route("/courts", methods=["GET", "POST"])
@@ -149,24 +177,13 @@ def courts():
                 court_hours = db.execute("SELECT start_hour, end_hour FROM courts WHERE court_name = ?",
                     court_name
                     )
-                print(court_hours[0])
-                for hour in range(court_hours[0]["start_hour"], (court_hours[1]["end_hour"]+1)):
-                    radio_hour = request.form.get(hour)
-                    checked_att = radio_hour.get_attribute("checked")
-                    if("checked" in checked_att):
-                        selected_hour = hour
-                        break
-                radio_rent_hour = request.form.get("nlineRadioOptions1")
-                checked_att = radio_rent_hour.get_attribute("checked")
-                if("checked" in checked_att):
-                    rent_hour = 1
-                else:
-                    rent_hour = 2
+                selected_hour = request.form['hours']
+                rent_hour = request.form['rent_hour']
                 order_date = datetime.datetime.now().isoformat(sep=" ", timespec="seconds")
                 court_id = db.execute("SELECT id FROM courts WHERE court_name = ?", 
                                       court_name
-                                      )
-                db.execute("INSERET INTO rents (rent_time, start_time, date, order_date, court_id, user_id) VALUES (?, ?, ?, ?, ?, ?)",
+                                      )[0]["id"]
+                db.execute("INSERT INTO rents (rent_time, start_time, date, order_date, court_id, user_id) VALUES (?, ?, ?, ?, ?, ?)",
                            rent_hour,
                            selected_hour,
                            date,
@@ -174,7 +191,7 @@ def courts():
                            court_id,
                            user_id
                            )
-                return redirect("/history", success=True)
+                return redirect("history")
         else:
             courts = db.execute("SELECT * FROM courts ORDER BY sport")
             sports = db.execute("SELECT sport FROM courts GROUP BY sport ORDER BY sport")
