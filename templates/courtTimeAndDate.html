@@ -35,11 +35,11 @@
                         </div>
                         <div class="form-group">
                             <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" name="rent_hour" id="inlineRadio1" value="1" onchange="checkDate(1, {{ hours }})" required>
+                                <input class="form-check-input" type="radio" name="rent_hour" id="inlineRadio1" value="1" onchange="checkDate(1, {{ hours }})" data-bs-toggle="collapse" required>
                                 <label class="form-check-label" for="inlineRadio1">1 hour</label>
                             </div>
                             <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" name="rent_hour" id="inlineRadio2" value="2" onchange="checkDate(2, {{ hours }})">
+                                <input class="form-check-input" type="radio" name="rent_hour" id="inlineRadio2" value="2" onchange="checkDate(2, {{ hours }})" data-bs-toggle="collapse">
                                 <label class="form-check-label" for="inlineRadio2">2 hours</label>
                             </div>
                             <div class="form-check form-check-inline">
@@ -52,10 +52,10 @@
                                 <!--
                                 <input placeholder="Selected time" type="time" class="form-control" step="3600000" min="08:00:00" max="21:00:00">
                                 -->
-                                <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
+                                <div class="btn-group collapse" role="group" aria-label="Basic radio toggle button group" id="myCollapse" >
                                 {% for time in range(min, max) %}
                                     <input type="radio" class="btn-check group1" name="hours" id="{{ time }}" value="{{ time }}" autocomplete="off">
-                                    <label class="btn btn-outline-primary" for="{{ time }}">{{ time }}:00</label>
+                                    <label class="btn btn-outline-primary" for="{{ time }}" id="{{ time }}">{{ time }}:00</label>
                                 {% endfor %}
                                 </div>
                             </div>

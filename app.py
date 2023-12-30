@@ -185,12 +185,14 @@ def courtTimeAndDate(court_name="Test"):
             court_name
         )
         curr_date = datetime.datetime.now().strftime("%Y-%m-%d")
+        hours= db.execute("SELECT date, start_time, rent_time FROM rents WHERE date >= ?", curr_date)
+        print(hours)
         return render_template("courtTimeAndDate.html",
                             active="true", 
                             username = db.execute("SELECT username FROM users WHERE id = ?", session["user_id"])[0]["username"],
                             min=court_hours[0]["start_hour"],
                             max=court_hours[0]["end_hour"],
-                            hours= db.execute("SELECT date, start_time, rent_time FROM rents WHERE date >= ?", curr_date)
+                            hours=hours
                            )
     else:
         date = request.form.get("date-input")
