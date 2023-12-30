@@ -19,7 +19,7 @@ function checkDate(len, time) {
         var myModal = new bootstrap.Modal(document.getElementById("exampleModal"));
         myModal.show();
         document.getElementById("failed").innerHTML="Must select date";
-        
+
         return false;
     }
     else
@@ -28,10 +28,8 @@ function checkDate(len, time) {
 
 
 function changeListenerDate(len, time) {
+    resetHours()
     var date = document.getElementById('accident').value;
-    console.log(len);
-    console.log(date);
-    console.log(time);
 
     var myCollapse = document.getElementById('myCollapse');
     var bsCollapse = new bootstrap.Collapse(myCollapse, {
@@ -39,6 +37,7 @@ function changeListenerDate(len, time) {
     });
     bsCollapse.show()
 
+    //correcting time by rented courts
     for (let i = 0; i < time.length; i++ ) {
         if (date == time[i]["date"]) {
             var v = document.getElementById(time[i]["start_time"].toString());
@@ -52,6 +51,30 @@ function changeListenerDate(len, time) {
             }
         }
     }
+
+    //correcting time by 2 hour pick
+    if (len == 2){
+        console
+        for (let i = 0; i < 23; i++ ) {
+            var v = document.getElementById(i);
+            var vNext = document.getElementById(i+1);
+            console.log("---------");
+            console.log(v)
+            console.log(vNext)
+            //last hour
+            if (v != null && vNext == null){
+                disabledElemect(v)
+            }
+            //first hour free but the second one is not
+            else if (v != null && vNext != null)
+            {
+                if (!v.disabled && vNext.disabled){
+                    disabledElemect(v);
+                }
+            }
+
+        }
+    }
 }
 
 function disabledElemect(v){
@@ -61,5 +84,13 @@ function disabledElemect(v){
         var vLabel = document.getElementById(v.id+"Label");
         if (vLabel != null)
             vLabel.disabled = true;
+    }
+}
+
+function resetHours(){
+    for (let i = 0; i < 24; i++ ) {
+        var v = document.getElementById(i)
+        if (v != null)
+            v.disabled = false;
     }
 }
