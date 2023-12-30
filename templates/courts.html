@@ -17,7 +17,7 @@
                     </div>
                     <form action="" method="post">
                         <div class="row">
-                            <div class="form-group"> <select class="form-control" id="court-selector" onchange="changeListenerCourts()" required>
+                            <div class="form-group"> <select class="form-control" id="court-selector" onchange="changeListenerCourts({{ courts}})" required>
                                     <option value="" selected hidden>Which sport</option>
                                     {% for sport in sports %}
                                         <option>{{ sport["sport"] }}</option>
