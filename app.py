@@ -181,11 +181,14 @@ def courts():
 @app.route("/courtTimeAndDate/<court_name>", methods=["GET", "POST"])
 def courtTimeAndDate(court_name="Test"):
     if request.method == "GET":
+        court_id = db.execute("SELECT id FROM courts WHERE court_name = ?", 
+                                court_name
+                                )[0]["id"]
         court_hours = db.execute("SELECT start_hour, end_hour FROM courts WHERE court_name = ?",
             court_name
         )
         curr_date = datetime.datetime.now().strftime("%Y-%m-%d")
-        hours= db.execute("SELECT date, start_time, rent_time FROM rents WHERE date >= ?", curr_date)
+        hours= db.execute("SELECT date, start_time, rent_time FROM rents WHERE date >= ? and court_id = ?", curr_date, court_id)
         print(hours)
         return render_template("courtTimeAndDate.html",
                             active="true", 
