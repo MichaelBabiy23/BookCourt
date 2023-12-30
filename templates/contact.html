@@ -1,11 +1,38 @@
 {% extends "layout.html" %}
 {% block body %}
 <link href="static/css/contacts.css" rel="stylesheet" >
+<script src="/static/js/contact.js"></script>
 {% if active %}
 <script>
     document.getElementById("contact").className = "nav-link active";
 </script>
 {% endif %}
+<div class="modal fade" id="exampleModalError" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+    <div class="modal-content">
+        <div class="modal-header failed">
+        <h5 class="modal-title" id="exampleModalLabel">Error</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            <p id="failed"></p>
+        </div>
+    </div>
+    </div>
+</div>
+<div class="modal fade" id="exampleModalSuccses" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+    <div class="modal-content">
+        <div class="modal-header success">
+        <h5 class="modal-title" id="exampleModalLabel">Success</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            <p id="success"></p>
+        </div>
+    </div>
+    </div>
+</div>
 <div class="container mt-5 col-md-3">
     <form id="contactForm" class="p-4 shadow rounded bg-dark whiteText login-container">
         {% if session["user_id"] %}
@@ -29,7 +56,7 @@
             <textarea class="form-control" id="message" placeholder="Message" style="height: 10rem;"></textarea>
         </div>
         <div class="d-grid">
-            <button class="btn btn-primary btn-lg" type="submit">Submit</button>
+            <button class="btn submit-btn" type="submit" onclick="return send()">Submit</button>
         </div>
     </form>
 </div>

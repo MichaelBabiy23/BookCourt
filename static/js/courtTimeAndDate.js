@@ -31,10 +31,8 @@ function checkDate(len, time) {
 
 
 function changeListenerDate(len, time) {
+    resetHours()
     var date = document.getElementById('accident').value;
-    console.log(len);
-    console.log(date);
-    console.log(time);
 
     var myCollapse = document.getElementById('myCollapse');
     var bsCollapse = new bootstrap.Collapse(myCollapse, {
@@ -42,6 +40,7 @@ function changeListenerDate(len, time) {
     });
     bsCollapse.show()
 
+    //correcting time by rented courts
     for (let i = 0; i < time.length; i++ ) {
         if (date == time[i]["date"]) {
             var v = document.getElementById(time[i]["start_time"].toString());
@@ -59,5 +58,13 @@ function changeListenerDate(len, time) {
                     v.remove();
             }
         }
+    }
+}
+
+function resetHours(){
+    for (let i = 0; i < 24; i++ ) {
+        var v = document.getElementById(i)
+        if (v != null)
+            v.disabled = false;
     }
 }

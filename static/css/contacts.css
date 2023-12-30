@@ -7,3 +7,26 @@
 .login-container:hover {
     opacity: 100%;
 }
+.failed {
+    background-color: #ca2246;
+}
+
+.success {
+    background-color: green;
+}
+
+.submit-btn {
+    color: #fff;
+    background-color: #e35e0a;
+    font-weight: 700;
+    height: 60px;
+    padding: 10px 30px;
+    width: 100%;
+    border-radius: 40px;
+    border: none;
+    text-transform: uppercase;
+    font-size: 16px;
+    letter-spacing: 1.3px;
+    -webkit-transition: 0.2s all;
+    transition: 0.2s all
+}

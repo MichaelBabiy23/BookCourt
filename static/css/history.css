@@ -39,6 +39,7 @@ tbody tr:nth-of-type(odd) {
 
 h2{
     text-align: center;
+    color: white;
 }
 
 .modal-header {
