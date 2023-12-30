@@ -7,3 +7,10 @@
 .login-container:hover {
     opacity: 100%;
 }
+.failed {
+    background-color: #ca2246;
+}
+
+.success {
+    background-color: green;
+}
