@@ -19,6 +19,7 @@ function checkDate(len, time) {
         var myModal = new bootstrap.Modal(document.getElementById("exampleModal"));
         myModal.show();
         document.getElementById("failed").innerHTML="Must select date";
+        
         return false;
     }
     else
@@ -42,18 +43,23 @@ function changeListenerDate(len, time) {
         if (date == time[i]["date"]) {
             var v = document.getElementById(time[i]["start_time"].toString());
             if (time[i]["rent_time"] == 1) {
-                if (v != null){
-                    v.remove();
-                }
+                disabledElemect(v)
             }
             else {
-                if (v != null){
-                    v.remove();
-                }
+                disabledElemect(v)
                 v = document.getElementById((time[i]["start_time"] + 1).toString())
-                if (v != null)
-                    v.remove();
+                disabledElemect(v)
             }
         }
+    }
+}
+
+function disabledElemect(v){
+    
+    if (v != null){
+        v.disabled = true;
+        var vLabel = document.getElementById(v.id+"Label");
+        if (vLabel != null)
+            vLabel.disabled = true;
     }
 }
