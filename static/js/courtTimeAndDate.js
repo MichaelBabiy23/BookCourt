@@ -16,10 +16,13 @@ window.onload = function () {
 function checkDate(len, time) {
     var valueDate = document.getElementById('accident').value;
     if (!valueDate) {
+        let radio = document.getElementById("inlineRadio1");
+        let radio2 = document.getElementById("inlineRadio2");
+        radio.checked = false;
+        radio2.checked = false;
         var myModal = new bootstrap.Modal(document.getElementById("exampleModal"));
         myModal.show();
         document.getElementById("failed").innerHTML="Must select date";
-        
         return false;
     }
     else
@@ -43,23 +46,18 @@ function changeListenerDate(len, time) {
         if (date == time[i]["date"]) {
             var v = document.getElementById(time[i]["start_time"].toString());
             if (time[i]["rent_time"] == 1) {
-                disabledElemect(v)
+                if (v != null){
+                    v.remove();
+                }
             }
             else {
-                disabledElemect(v)
+                if (v != null){
+                    v.remove();
+                }
                 v = document.getElementById((time[i]["start_time"] + 1).toString())
-                disabledElemect(v)
+                if (v != null)
+                    v.remove();
             }
         }
-    }
-}
-
-function disabledElemect(v){
-    
-    if (v != null){
-        v.disabled = true;
-        var vLabel = document.getElementById(v.id+"Label");
-        if (vLabel != null)
-            vLabel.disabled = true;
     }
 }
