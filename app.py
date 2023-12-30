@@ -121,45 +121,66 @@ def contact():
         return render_template("contact.html", username = db.execute("SELECT username FROM users WHERE id = ?", session["user_id"])[0]["username"], active="true")
     return render_template("contact.html", active="true")
 
-@app.route("/history")
+@app.route("/history" ,methods=["GET", "POST"])
 def history():
-    if session.get('logged_in'):
-        user = session["user_id"]
-        curr_date = datetime.datetime.now().strftime("%Y-%m-%d")
-        curr_hour = datetime.datetime.now().hour
-        passed = db.execute("SELECT rent_time, start_time, date, order_date, court_id FROM rents WHERE user_id = ? AND date < ? ORDER BY date DESC, start_time",
-                            user,
-                            curr_date
-                            )
-        actives = db.execute("SELECT rent_time, start_time, date, order_date, court_id FROM rents WHERE user_id = ? AND date >= ? ORDER BY date, start_time",
-                            user,
-                            curr_date
-                            )
-        counter = 0
-        while actives and actives[counter] and curr_date == actives[counter]["date"]:
-            if actives[counter]["start_time"] <= curr_hour:
-                passed.insert(0, actives[counter])
-                del actives[counter]
-            counter += 1
-        counter = 0
-        if passed:
-            for pas in passed:
-                pas["court_id"] = db.execute("SELECT court_name FROM courts WHERE id = ?", pas["court_id"])[0]["court_name"]
-                pas["counter"] = counter
-                counter += 1
-        counter = 0
-        if actives:
-            for act in actives:
-                act["court_id"] = db.execute("SELECT court_name FROM courts WHERE id = ?", act["court_id"])[0]["court_name"]
-                act["counter"] = counter
-                counter += 1
-        return render_template("history.html", 
-                            username=db.execute("SELECT username FROM users WHERE id = ?", user)[0]["username"],
-                            active="true",
-                            passed=passed,
-                            actives=actives
-                            )
-    return redirect("/login")
+    if request.method == "POST":
+        delete = request.form["cancel"]
+        print(delete)
+        val = delete.split("+")
+        print(val)
+        val[2] = int(
+            db.execute("SELECT id FROM courts WHERE court_name = ?", 
+                                        val[2]
+                                        )[0]["id"]
+        )
+        print(val[2])
+        db.execute("DELETE FROM rents WHERE start_time = ? AND date = ? AND court_id = ?",
+                   int(val[0]),
+                   val[1],
+                   val[2]
+                   )
+        return redirect("/history")
+    else:
+        if session.get('logged_in'):
+                user = session["user_id"]
+                curr_date = datetime.datetime.now().strftime("%Y-%m-%d")
+                curr_hour = datetime.datetime.now().hour
+                passed = db.execute("SELECT rent_time, start_time, date, order_date, court_id FROM rents WHERE user_id = ? AND date < ? ORDER BY date DESC, start_time",
+                                    user,
+                                    curr_date
+                                    )
+                actives = db.execute("SELECT rent_time, start_time, date, order_date, court_id FROM rents WHERE user_id = ? AND date >= ? ORDER BY date, start_time",
+                                    user,
+                                    curr_date
+                                    )
+                counter = 0
+                print(actives)
+                while actives and actives[counter] and curr_date == actives[counter]["date"]:
+                    if actives[counter]["start_time"] <= curr_hour:
+                        passed.insert(0, actives[counter])
+                        del actives[counter]
+                    counter += 1
+                    if(counter >= len(actives)):
+                        break
+                counter = 0
+                if passed:
+                    for pas in passed:
+                        pas["court_id"] = db.execute("SELECT court_name FROM courts WHERE id = ?", pas["court_id"])[0]["court_name"]
+                        pas["counter"] = counter
+                        counter += 1
+                counter = 0
+                if actives:
+                    for act in actives:
+                        act["court_id"] = db.execute("SELECT court_name FROM courts WHERE id = ?", act["court_id"])[0]["court_name"]
+                        act["counter"] = counter
+                        counter += 1
+                return render_template("history.html", 
+                                    username=db.execute("SELECT username FROM users WHERE id = ?", user)[0]["username"],
+                                    active="true",
+                                    passed=passed,
+                                    actives=actives
+                                    )
+        return redirect("/login")
 
 @app.route("/courts", methods=["GET", "POST"])
 def courts():

@@ -16,6 +16,10 @@ window.onload = function () {
 function checkDate(len, time) {
     var valueDate = document.getElementById('accident').value;
     if (!valueDate) {
+        let radio = document.getElementById("inlineRadio1");
+        let radio2 = document.getElementById("inlineRadio2");
+        radio.checked = false;
+        radio2.checked = false;
         var myModal = new bootstrap.Modal(document.getElementById("exampleModal"));
         myModal.show();
         document.getElementById("failed").innerHTML="Must select date";
@@ -42,37 +46,17 @@ function changeListenerDate(len, time) {
         if (date == time[i]["date"]) {
             var v = document.getElementById(time[i]["start_time"].toString());
             if (time[i]["rent_time"] == 1) {
-                disabledElemect(v)
+                if (v != null){
+                    v.remove();
+                }
             }
             else {
-                disabledElemect(v)
+                if (v != null){
+                    v.remove();
+                }
                 v = document.getElementById((time[i]["start_time"] + 1).toString())
                 disabledElemect(v)
             }
-        }
-    }
-
-    //correcting time by 2 hour pick
-    if (len == 2){
-        console
-        for (let i = 0; i < 23; i++ ) {
-            var v = document.getElementById(i);
-            var vNext = document.getElementById(i+1);
-            console.log("---------");
-            console.log(v)
-            console.log(vNext)
-            //last hour
-            if (v != null && vNext == null){
-                disabledElemect(v)
-            }
-            //first hour free but the second one is not
-            else if (v != null && vNext != null)
-            {
-                if (!v.disabled && vNext.disabled){
-                    disabledElemect(v);
-                }
-            }
-
         }
     }
 }

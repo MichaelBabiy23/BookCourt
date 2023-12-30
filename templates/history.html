@@ -29,62 +29,64 @@
     <h2>Live oreders and past</h2>
     <div class="row">
         <div class="column">
-            <table class = "table table-hover table-dark">
-                <thead>
-                <tr>
-                    <th>#</th>
-                    <th>Order date</th>
-                    <th>Date</th>
-                    <th>Court name</th>
-                    <th>From hour</th>
-                    <th>To hour</th>    
-                    <th>Price</th>
-                    <th>Cancel Option</th>
-                </tr>
-                </thead>
-                <tbody>
-                    {% for act in actives %}
-                    <tr>
-                        <td>{{ act.counter+1 }}</td>
-                        <td>{{ act.order_date }}</td>
-                        <td>{{ act.date }}</td>
-                        <td>{{ act.court_id }}</td>
-                        <td>{{ act.start_time }}:00</td>
-                        <td>{{ act.start_time+act.rent_time }}:00</td>
-                        <td>10$</td>
-                        <td>Cancel</td>
-                    </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
-        </div>
-        <div class="column">
-            <table class = "table table-hover table-dark">
-                <thead>
+            <form action="/history" method="post">
+                <table class = "table table-hover table-dark">
+                    <thead>
                     <tr>
                         <th>#</th>
                         <th>Order date</th>
                         <th>Date</th>
                         <th>Court name</th>
                         <th>From hour</th>
-                        <th>To hour</th>
+                        <th>To hour</th>    
                         <th>Price</th>
+                        <th>Cancel Option</th>
                     </tr>
-                </thead>
-                <tbody>
-                    {% for pass in passed %}
-                    <tr>
-                        <td>{{ pass.counter+1 }}</td>
-                        <td>{{ pass.order_date }}</td>
-                        <td>{{ pass.date }}</td>
-                        <td>{{ pass.court_id }}</td>
-                        <td>{{ pass.start_time }}:00</td>
-                        <td>{{ pass.start_time+pass.rent_time }}:00</td>
-                        <td>10$</td>
-                    </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody>
+                        {% for act in actives %}
+                        <tr>
+                            <td>{{ act.counter+1 }}</td>
+                            <td>{{ act.order_date }}</td>
+                            <td>{{ act.date }}</td>
+                            <td>{{ act.court_id }}</td>
+                            <td>{{ act.start_time }}:00</td>
+                            <td>{{ act.start_time+act.rent_time }}:00</td>
+                            <td>{{ act.rent_time * 10  }}$</td>
+                            <td><button type="submit" class="btn btn-danger" name="cancel" value="{{ act.start_time }}+{{ act.date }}+{{ act.court_id }}">Cancel</button></td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            <div class="column">
+                <table class = "table table-hover table-dark">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Order date</th>
+                            <th>Date</th>
+                            <th>Court name</th>
+                            <th>From hour</th>
+                            <th>To hour</th>
+                            <th>Price</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for pass in passed %}
+                        <tr>
+                            <td>{{ pass.counter+1 }}</td>
+                            <td>{{ pass.order_date }}</td>
+                            <td>{{ pass.date }}</td>
+                            <td>{{ pass.court_id }}</td>
+                            <td>{{ pass.start_time }}:00</td>
+                            <td>{{ pass.start_time+pass.rent_time }}:00</td>
+                            <td>{{ pass.rent_time * 10  }}$</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </form>
         </div>
     </div>
 {% endblock body %}
