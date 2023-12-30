@@ -23,7 +23,10 @@ function checkDate(len, time) {
         var myModal = new bootstrap.Modal(document.getElementById("exampleModal"));
         myModal.show();
         document.getElementById("failed").innerHTML="Must select date";
+<<<<<<<<< Temporary merge branch 1
 
+=========
+>>>>>>>>> Temporary merge branch 2
         return false;
     }
     else
@@ -55,8 +58,34 @@ function changeListenerDate(len, time) {
                     v.remove();
                 }
                 v = document.getElementById((time[i]["start_time"] + 1).toString())
+                if (v != null)
+                    v.remove();
+            }
+        }
+    }
+<<<<<<<<< Temporary merge branch 1
+
+    //correcting time by 2 hour pick
+    if (len == 2){
+        console
+        for (let i = 0; i < 23; i++ ) {
+            var v = document.getElementById(i);
+            var vNext = document.getElementById(i+1);
+            console.log("---------");
+            console.log(v)
+            console.log(vNext)
+            //last hour
+            if (v != null && vNext == null){
                 disabledElemect(v)
             }
+            //first hour free but the second one is not
+            else if (v != null && vNext != null)
+            {
+                if (!v.disabled && vNext.disabled){
+                    disabledElemect(v);
+                }
+            }
+
         }
     }
 }
