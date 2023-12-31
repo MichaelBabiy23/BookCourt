@@ -3,6 +3,7 @@ function checkInput(){
     let pass = document.querySelector("#password").value;
     let email = document.querySelector("#email").value;
     let phone = document.querySelector("#phone").value;
+    let passagain = document.querySelector("#passwordagain").value;
     var myModal = new bootstrap.Modal(document.getElementById("exampleModal"));
     if (user.length < 4 || user.length > 12)
     {

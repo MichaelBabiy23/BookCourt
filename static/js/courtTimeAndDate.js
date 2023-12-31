@@ -23,10 +23,6 @@ function checkDate(len, time) {
         var myModal = new bootstrap.Modal(document.getElementById("exampleModal"));
         myModal.show();
         document.getElementById("failed").innerHTML="Must select date";
-<<<<<<<<< Temporary merge branch 1
-
-=========
->>>>>>>>> Temporary merge branch 2
         return false;
     }
     else
@@ -35,14 +31,13 @@ function checkDate(len, time) {
 
 
 function changeListenerDate(len, time) {
-    resetHours()
+    resetHours();
     var date = document.getElementById('accident').value;
-
     var myCollapse = document.getElementById('myCollapse');
     var bsCollapse = new bootstrap.Collapse(myCollapse, {
         toggle: false
     });
-    bsCollapse.show()
+    bsCollapse.show();
 
     //correcting time by rented courts
     for (let i = 0; i < time.length; i++ ) {
@@ -50,33 +45,29 @@ function changeListenerDate(len, time) {
             var v = document.getElementById(time[i]["start_time"].toString());
             if (time[i]["rent_time"] == 1) {
                 if (v != null){
-                    v.remove();
+                    disabledElemect(v);
                 }
             }
             else {
                 if (v != null){
-                    v.remove();
+                    disabledElemect(v);
                 }
                 v = document.getElementById((time[i]["start_time"] + 1).toString())
-                if (v != null)
-                    v.remove();
+                if (v != null) {
+                    disabledElemect(v);
+                } 
             }
         }
     }
-<<<<<<<<< Temporary merge branch 1
 
     //correcting time by 2 hour pick
     if (len == 2){
-        console
         for (let i = 0; i < 23; i++ ) {
             var v = document.getElementById(i);
             var vNext = document.getElementById(i+1);
-            console.log("---------");
-            console.log(v)
-            console.log(vNext)
             //last hour
             if (v != null && vNext == null){
-                disabledElemect(v)
+                disabledElemect(v);
             }
             //first hour free but the second one is not
             else if (v != null && vNext != null)
@@ -102,8 +93,11 @@ function disabledElemect(v){
 
 function resetHours(){
     for (let i = 0; i < 24; i++ ) {
-        var v = document.getElementById(i)
-        if (v != null)
+        var v = document.getElementById(i);
+        if (v != null) {
+            v.checked = false;
+            console.log("unnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn")
             v.disabled = false;
+        } 
     }
 }
