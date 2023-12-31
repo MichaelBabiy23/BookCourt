@@ -12,6 +12,16 @@ window.onload = function () {
 
 }
 
+function reset() {
+    let radio = document.getElementById("inlineRadio1");
+    let radio2 = document.getElementById("inlineRadio2");
+    if (radio != null) {
+        radio.checked = false;
+    }
+    if (radio2.checked != null) {
+        radio2.checked = false;
+    }
+}
 
 function checkDate(len, time) {
     var valueDate = document.getElementById('accident').value;
@@ -96,7 +106,6 @@ function resetHours(){
         var v = document.getElementById(i);
         if (v != null) {
             v.checked = false;
-            console.log("unnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn")
             v.disabled = false;
         } 
     }
