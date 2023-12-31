@@ -89,6 +89,12 @@ function changeListenerDate(len, time) {
 
         }
     }
+    const d = new Date();
+    curr_date = d.getDate();
+    var day = date.slice(-2);
+    if (day != null && day == curr_date) {
+        sameday();
+    }
 }
 
 function disabledElemect(v){
@@ -108,5 +114,17 @@ function resetHours(){
             v.checked = false;
             v.disabled = false;
         } 
+    }
+}
+
+function sameday() {
+    const d = new Date();
+    curr_hour = parseInt(d.getHours());
+    for (let i = 0; i <= curr_hour; i++) {
+        var v = document.getElementById(i);
+        if (v != null) {
+            v.checked = false;
+            v.disabled = true;
+        }  
     }
 }
