@@ -1,12 +1,9 @@
-import os
 import datetime
 
 from cs50 import SQL
-from flask import Flask, flash, redirect, render_template, request, session, url_for
+from flask import Flask, redirect, render_template, request, session, url_for
 from flask_session import Session
 from werkzeug.security import check_password_hash, generate_password_hash
-
-from flask_login import login_required
 
 # Configure application
 app = Flask(__name__)
@@ -125,7 +122,6 @@ def contact():
 def history():
     if request.method == "POST":
         delete = request.form["cancel"]
-        print(delete)
         val = delete.split("+")
         print(val)
         val[2] = int(
@@ -154,7 +150,6 @@ def history():
                                     curr_date
                                     )
                 counter = 0
-                print(actives)
                 while actives and actives[counter] and curr_date == actives[counter]["date"]:
                     if actives[counter]["start_time"] <= curr_hour:
                         passed.insert(0, actives[counter])
@@ -210,7 +205,6 @@ def courtTimeAndDate(court_name="Test"):
         )
         curr_date = datetime.datetime.now().strftime("%Y-%m-%d")
         hours= db.execute("SELECT date, start_time, rent_time FROM rents WHERE date >= ? and court_id = ?", curr_date, court_id)
-        print(hours)
         return render_template("courtTimeAndDate.html",
                             active="true", 
                             username = db.execute("SELECT username FROM users WHERE id = ?", session["user_id"])[0]["username"],

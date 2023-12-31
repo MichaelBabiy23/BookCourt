@@ -2,5 +2,4 @@ cs50
 Flask
 Flask-login
 Flask-Session
-requests
 datetime
