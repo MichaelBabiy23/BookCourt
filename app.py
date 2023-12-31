@@ -58,7 +58,7 @@ def login():
     if request.method == "POST":
         username = request.form.get("username")
         rows = db.execute(
-            "SELECT * FROM users WHERE username = ?", username
+            "SELECT * FROM users WHERE username = ?", escape(username)
         )
         if len(rows) != 1:
             return render_template("login.html" , fail="username", active="true")
